@@ -1,0 +1,75 @@
+﻿Create the Below View before Running the External Module
+========================================================================================================================================
+
+CREATE view [dbo].[vu_Core_MonthAgingWithoutPDC] as  
+select  CONCAT(c.sAbbr,':', a.sVoucherNo) as sVoucherNo, a.iVoucherType,  
+a.iDate, a.iDueDate,   
+concat(Convert(Char(4), cast (dbo.IntToDate(a.iDate) as datetime), 100),'-',  
+Convert(Char(4), cast (dbo.IntToDate(a.iDate) as datetime), 120)) as [MonthDue],  
+dbo.IntToDate(a.iDate) BillDate,convert(varchar,dbo.IntToDate(a.iDate),103) ConvertedBillDate, dbo.IntToDate(a.iDueDate) DueDate,  
+DATEDIFF(DAY, convert(varchar, dbo.IntToDate(a.iDate), 111), GETDATE()) DelayDays,    
+concat(Convert(Char(4), cast (dbo.IntToDate(a.iDate) as datetime), 100),'-',  
+Convert(Char(4), cast (dbo.IntToDate(a.iDate) as datetime), 120)) as [Month],  
+a.TagId AccId, a.AccCode, a.AccName, a.TagName TagName, a.Grp,   
+concat(a.sCode,'-',a.SuperGroup) as SuperGroup,    
+sum(a.Balance) BillValue, isnull(sum(a.BillAmount),0) Balance,SalesMan  
+from   
+(  
+select h.sVoucherNo, h.iVoucherType,  d.iDueDate, sg.sCode, h.iDate, m.iMasterId TagId, m.sName as AccName, m.sCode as AccCode,   
+case when left(mg.sName,1)=' ' then 'Others' else mg.sName End  as TagName, isnull(p.sName, m.sName) Grp,  
+isnull(isnull(sg.sName, p.sName), m.sName) SuperGroup,  
+sum(d.mAmount1) as Balance, sum(r.BillAmount+r.AdjAmt) BillAmount,isnull(sm.sName,'')SalesMan  
+from vmCore_Account m join tCore_Data_0 d on m.iMasterId=d.iCode                                                                                                                                    
+join tCore_Header_0 h on d.iHeaderId=h.iHeaderId  
+join mCore_CostCenter mg on d.iFaTag=mg.iMasterId  
+left outer join vmCore_Account p on m.iParentId=p.iMasterId  
+left outer join vmCore_Account sg on p.iParentId=sg.iMasterId  
+join mCore_Salesman sm on sm.iMasterId=m.Salesman  
+join   
+(  
+select isnull(ia.BillAmount,0) AdjAmt, ir.iBodyId, isnull(ir.BillAmount,0)  BillAmount from   
+(  
+select iRef, iBodyId, sum(mBaseAmount) BillAmount from tCore_Refrn_0 where iRefType=0   
+group by iRef, iBodyId  
+) ir   
+join  
+(  
+select iRef, sum(mBaseAmount) BillAmount from tCore_Refrn_0 where iRefType<>0   
+Group by iRef  
+) ia  
+on ir.iRef=ia.iRef  
+) r on d.iBodyId=r.iBodyId  
+where h.iVoucherType not in (5888,5889,7168, 7169) and  d.bUpdateFA=1 and h.bSuspended=0 and h.iAuth=1 and m.iAccountTypeId in (5,6,7)  
+Group by h.sVoucherNo, h.iVoucherType, h.iDate, d.iDueDate, m.iMasterId, m.sName, m.sCode , mg.sName, p.sName, sg.sName, sg.sCode,sm.sName  
+union all  
+select  h.sVoucherNo, h.iVoucherType, d.iDueDate,  
+sg.sCode, h.iDate, m.iMasterId TagId, m.sName as AccName, m.sCode as AccCode,   
+case when left(mg.sName,1)=' '   
+then 'Others' else mg.sName End as TagName, isnull(p.sName, m.sName) Grp,  
+isnull(isnull(sg.sName, p.sName), m.sName) SuperGroup,  
+sum(d.mAmount1) as Balance, sum(r.BillAmount+r.AdjAmt) BillValue,isnull(sm.sName,'')SalesMan  
+from vmCore_Account m join tCore_Data_0 d on m.iMasterId=d.iBookNo                                                                                                                                    
+join tCore_Header_0 h on d.iHeaderId=h.iHeaderId  
+join mCore_CostCenter mg on d.iFaTag=mg.iMasterId  
+left outer join vmCore_Account p on m.iParentId=p.iMasterId  
+left outer join vmCore_Account sg on p.iParentId=sg.iMasterId  
+join mCore_Salesman sm on sm.iMasterId=m.Salesman  
+join   
+(  
+select isnull(ia.BillAmount,0) AdjAmt, ir.iBodyId, isnull(ir.BillAmount,0) BillAmount from   
+(  
+select iCode, iRef, iBodyId, sum(mBaseAmount) BillAmount from tCore_Refrn_0 where iRefType=0   
+group by iCode, iRef, iBodyId  
+) ir   
+left outer join  
+(  
+select iRef, sum(mBaseAmount) BillAmount from tCore_Refrn_0 where iRefType<>0   
+Group by iRef  
+) ia  
+on ir.iRef=ia.iRef  
+) r on d.iBodyId=r.iBodyId  
+where h.iVoucherType not in (5888,5889,7168, 7169) and d.bUpdateFA=1 and h.bSuspended=0 and h.iAuth=1 and m.iAccountTypeId in (5,6,7)  
+Group by h.sVoucherNo, h.iVoucherType, h.iDate, d.iDueDate, m.iMasterId, m.sName , m.sCode , mg.sName, p.sName, sg.sName, sg.sCode,sm.sName  
+) a join cCore_Vouchers_0 c on a.iVoucherType=c.iVoucherType  
+Group by c.sAbbr, a.sVoucherNo, a.iVoucherType, a.iDate, a.iDueDate, a.TagId, a.AccName, a.AccCode, a.sCode, a.Grp, a.SuperGroup, a.TagName,a.SalesMan  
+having round(sum(a.BillAmount),3)<>0  

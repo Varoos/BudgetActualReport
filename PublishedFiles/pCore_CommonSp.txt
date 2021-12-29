@@ -1,0 +1,107 @@
+USE [Focus8020]
+GO
+/****** Object:  StoredProcedure [dbo].[pCore_CommonSp]    Script Date: 23/11/2021 5:53:16 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+        -- =============================================
+        -- Author:		 Rosmin
+        -- Create date: 13 Oct 2021
+        -- Description: <Common SP for all purpose>
+        -- =============================================
+		--exec [dbo].[pCore_CommonSp] @Operation = getReportData,@p1=164,@p3 ='2021-11-14'
+    ALTER Proc [dbo].[pCore_CommonSp]
+	@Operation varchar(200) =null,
+	@p1 int = null,
+	@p2  int =null,
+	@p3 datetime=null,
+	@p4 nvarchar(100) =null,
+	@p5 nvarchar(500)=null,
+	@p6 nvarchar(200)=null,
+	@p7 nvarchar(200)=null,
+	@p8 nvarchar(200)=null,
+	@p9 nvarchar(1000)=null,
+	@p0 nvarchar(max)=null
+    as
+    begin
+	if(@Operation = 'getProjects')-- getting all projects which are mapped with projet account
+	begin
+		select mCore_Project.iMasterId,mCore_Project.sName from muCore_Project
+		inner join mCore_Project on muCore_Project.iMasterId = mCore_Project.iMasterId
+		where ProjectAccount != 0;
+	end
+	else if(@Operation = 'getReportData')
+	begin
+		DROP TABLE IF EXISTS #GridData
+		Create Table #GridData (Budget decimal(18,2),Category nvarchar(500), NonPO decimal(18,2), PO decimal(18,2),iTagId int,ProjectId int)
+		INSERT into #GridData
+		select isnull(sum(d.mAmount2),0)Budget,c.sName Category,isnull(n.NonPO,0) NonPO,isnull(p.PO,0) PO,t.iTag3014,d.iFaTag from tCore_Data_0 d
+		inner join tCore_Header_0 h on d.iHeaderId = h.iHeaderId and h.iVoucherType = 7938
+		inner join tCore_Data_Tags_0 t on d.iBodyId = t.iBodyId 
+		inner join mCore_BudgetCategory c on c.iMasterId = t.iTag3014
+		left join 
+		(
+		select sum(h.fNet) NonPO,t.iTag3014,d.iFaTag from tCore_Header_0 h
+		inner join tCore_Data_0 d on h.iHeaderId = d.iHeaderId
+		inner join tCore_Data_Tags_0 t on d.iBodyId = t.iBodyId
+		where h.iVoucherType in (769,6401) and d.bUpdateFA =1 and d.iFaTag = @p1
+		group by d.iFaTag,t.iTag3014
+		)n on n.iTag3014 = t.iTag3014
+		left join 
+		(
+		select sum(h.fNet) PO,t.iTag3014,d.iFaTag from tCore_Header_0 h
+		inner join tCore_Data_0 d on h.iHeaderId = d.iHeaderId
+		inner join tCore_Data_Tags_0 t on d.iBodyId = t.iBodyId
+		where h.iVoucherType not in (769,6401) and d.bUpdateFA =1 and d.iFaTag = @p1
+		group by d.iFaTag,t.iTag3014
+		)p on p.iTag3014 = t.iTag3014
+		where h.iVoucherType = 7938 and d.iFaTag = @p1
+		AND (h.iDate BETWEEN 0 AND dbo.DateToInt(@p3)  )
+		group by d.iFaTag,t.iTag3014,c.sName,n.NonPO,p.PO
+		--exec [dbo].[pCore_CommonSp] @Operation = getReportData,@p1=164,@p3 ='2021-11-21'
+		declare @_ActualCost decimal(18,2);
+		declare @InvTillDate decimal(18,2);
+		declare @Received decimal(18,2);
+		declare @Retension decimal(18,2);
+		declare @Pending decimal(18,2);
+		declare @Outstanding decimal(18,2);
+		declare @OrderValue decimal(18,2);
+		declare @Variation decimal(18,2);
+
+		set @_ActualCost = (select Sum(NonPO)+SUM(PO) from #GridData);
+
+		set @InvTillDate =(select SUM(d.mAmount2) from tCore_Header_0 h
+		inner join tCore_Data_0 d on h.iHeaderId = d.iHeaderId
+		where h.iVoucherType in (1794,3333) and d.iFaTag= @p1
+		AND h.iDate BETWEEN 0 AND dbo.DateToInt(@p3)  )
+
+		set @Received = (select sum(d.mAmount2) from tCore_Header_0 h
+		inner join cCore_Vouchers_0 v on h.iVoucherType = v.iVoucherType
+		inner join tCore_Data_0 d on h.iHeaderId = d.iHeaderId
+		where h.iVoucherType =4608 and d.iFaTag= @p1
+		AND h.iDate BETWEEN 0 AND dbo.DateToInt(@p3) )
+		
+		set @Retension = (select (isnull((sum(NetBalance)),0))*(-1) from             
+		(select iCode iAccount , sum(mAmount1) NetBalance from tCore_Data_0 d             
+		join tCore_Header_0 h on d.iHeaderId = h.iHeaderId              
+		join (select iMasterId from dbo.fCore_GetAccountHierarchy(2975,0))b on d.iCode = b.iMasterId            
+		where bUpdateFA = 1 and h.iDate between 0 and dbo.DateToInt(@p3)  and d.iFaTag = @p1           
+		group by icode             
+		union all               
+		select iBookNo iAccount , sum(mAmount2) NetBalance from tCore_Data_0 d             
+		join tCore_Header_0 h on d.iHeaderId = h.iHeaderId              
+		join (select iMasterId from dbo.fCore_GetAccountHierarchy(2975,0))b on d.iBookNo = b.iMasterId            
+		where bUpdateFA = 1 and h.iDate between 0 and dbo.DateToInt(@p3)  and d.iFaTag = @p1           
+		group by iBookNo)a )
+
+		select @OrderValue =[value],@Variation = Variation  from muCore_Project where iMasterId = @p1
+		set @Pending = @OrderValue - @InvTillDate;
+		set @Outstanding = @InvTillDate - @Received - @Retension;
+
+		select * ,isnull(@OrderValue,0) OrderValue, isnull(@Variation,0) Variation, isnull(@_ActualCost,0) ActualCost, isnull(@InvTillDate,0) InvoiceTillDate, isnull(@Pending,0) Pending, isnull(@Received,0) Received, isnull(@Retension,0) Retension, isnull(@Outstanding,0) Outstanding,isnull(@OrderValue+@Variation,0) TotalSalesValue,isnull(@InvTillDate+@Pending,0) Total  from #GridData
+
+	end
+    end
+           

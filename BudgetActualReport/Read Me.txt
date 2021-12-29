@@ -1,0 +1,16 @@
+﻿Fantasia Trading Main Screen :
+------------------------------------------------------------------
+Configuration Settings Screen Setting--> External Functions:
+On Event       : On Menu
+Module Type    : URL
+URL            : https://localhost/BudgetActualReport/Ageing?CompanyId=$CCode
+Menu Name      : As per Your Wish
+
+
+
+Note:
+==============================
+
+==> Please Run the View "View Creation" given in Folder before Using External Module 
+
+--> Change Server IP in place of localhost for Server Testing
