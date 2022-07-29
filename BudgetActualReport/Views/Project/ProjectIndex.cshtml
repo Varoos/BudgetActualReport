@@ -100,7 +100,6 @@
 
     <script>
         var compId=@ViewBag.CompId;
-        let selectedProject = "";
         toastr.options = {
             "closeButton": true,
             "debug": false,
@@ -135,8 +134,10 @@
         $("#btnok").click(function () {
             $("#progress").show();
             debugger
-            var CompanyId=compId;
+            var CompanyId = compId;
+            var selectedProject = "";
             selectedProject = $("#Projects").find('option:selected').val();
+            var selectedProjectname  = $("#Projects").find('option:selected').text();
 
             var ReportDate = $("#ReportDate").val();
 
@@ -154,7 +155,7 @@
             }
            
             else{
-                window.location.href = path + "/Project/BudgetActualReport?CompanyId=" + CompanyId + "&Project=" + selectedProject + "&ReportDate=" + ReportDate;
+                window.location.href = path + "/Project/BudgetActualReport?CompanyId=" + CompanyId + "&Project=" + selectedProject + "&ReportDate=" + ReportDate + "&ProjectName=" + selectedProjectname;
             }
         });
         function getProjects() {

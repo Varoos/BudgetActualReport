@@ -125,7 +125,30 @@
                 @Html.ActionLink("Back", "ProjectIndex", "Project", new { @CompanyId = TempData["CompanyId"] }, new { @class = "btn btn-primary btn-sm" })
         </div>
     </div>
+
     <div class="row form-group">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @{
+
+                <table style="font-weight:bold;width:100%;margin:0 40px 0 40px">
+                    <tr>
+                        <td>
+                            Project :
+                        </td>
+                        <td>
+                            @Model.Projects
+                        </td>
+                        <td>
+                            Date :
+                        </td>
+                        <td>
+                            @Model.ReportDate
+                        </td>
+                    </tr>
+                    
+                </table>
+            }
+        </div>
         <div class="col-lg-12 col-md-12 col-sm-12">
             <div class="table-wrap" style="height:auto !important">
                 <table class="table table-bordered table-striped" border="1" id="tagtable">
@@ -161,20 +184,20 @@
                                     count++;
                                     <tr align="center">
                                         <td style="text-align:center;">@count</td>
-                                        <td style="text-align:center;">@obj.Category</td>
-                                        <td style="text-align:center;">@obj.Budget.ToString("#,##0.00")</td>
-                                        <td style="text-align:center;"><b>@obj.NonPo.ToString("#,##0.00")</b></td>
-                                        <td style="text-align:center;"><b>@obj.PO.ToString("#,##0.00")</b></td>
-                                        <td style="text-align:center;">0</td>
-                                        <td style="text-align:center;">0</td>
+                                        <td style="text-align:left;">@obj.Category</td>
+                                        <td style="text-align:right;">@obj.Budget.ToString("#,##0.00")</td>
+                                        <td style="text-align:right;"><b>@obj.NonPo.ToString("#,##0.00")</b></td>
+                                        <td style="text-align:right;"><b>@obj.PO.ToString("#,##0.00")</b></td>
+                                        <td style="text-align:right;">0</td>
+                                        <td style="text-align:right;">0</td>
                                     </tr>
                                 }
                                 <tr align="center" class="subtotal">
                                     <td style="text-align:center;"></td>
                                     <td style="text-align:center;"><b>Grand Total</b></td>
-                                    <td style="text-align:center;">@TotalBudget.ToString("#,##0.00")</td>
-                                    <td style="text-align:center;"><b>@TotalNonPO.ToString("#,##0.00")</b></td>
-                                    <td style="text-align:center;"><b>@TotalPO.ToString("#,##0.00")</b></td>
+                                    <td style="text-align:right;">@TotalBudget.ToString("#,##0.00")</td>
+                                    <td style="text-align:right;"><b>@TotalNonPO.ToString("#,##0.00")</b></td>
+                                    <td style="text-align:right;"><b>@TotalPO.ToString("#,##0.00")</b></td>
                                     <td style="text-align:center;"></td>
                                     <td style="text-align:center;"></td>
                                 </tr>

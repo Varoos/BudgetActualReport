@@ -314,7 +314,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55746</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/BudgetActualReport</IISUrl>
+          <IISUrl>http://localhost:55746/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
