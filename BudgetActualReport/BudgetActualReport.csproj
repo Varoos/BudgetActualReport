@@ -220,13 +220,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AgeingController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AgeingAnalysis.cs" />
     <Compile Include="Models\BudgetVsActual.cs" />
     <Compile Include="Models\DBClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

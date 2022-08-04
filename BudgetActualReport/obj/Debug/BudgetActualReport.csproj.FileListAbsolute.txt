@@ -96,6 +96,8 @@ D:\Focus\Fanar\External Module\BudgetActualReport\BudgetActualReport\obj\Debug\B
 D:\Focus\Fanar\External Module\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.dll
 D:\Focus\Fanar\External Module\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.pdb
 D:\Focus\Fanar\External Module\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.AssemblyReference.cache
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.AssemblyReference.cache
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.CoreCompileInputs.cache
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ApplicationInsights.config
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\roslyn\csc.exe
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -149,8 +151,7 @@ D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\System.Web.WebPages.Dep
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\System.Web.WebPages.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\System.Web.WebPages.Razor.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\WebGrease.dll
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ExcelNumberFormat.dll
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\FastMember.dll
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\NepaliDateConverter.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Office.Interop.Outlook.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Exchange.WebServices.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\StackExchange.Redis.dll
@@ -159,8 +160,10 @@ D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.HRMS.DS.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.TranSettings.DataStructs.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.Security.DataStructs.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.Company.DataStructs.dll
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.Web.Mvc.Session.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.RD.DataStructs.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.Masters.DataStructs.dll
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\DocumentFormat.OpenXml.xml
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.AI.DependencyCollector.xml
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.AI.ServerTelemetryChannel.xml
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.AI.Web.xml
@@ -189,10 +192,6 @@ D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Owin.Security
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Owin.Security.Google.xml
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Owin.Security.Twitter.xml
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.AssemblyReference.cache
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.CoreCompileInputs.cache
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.CopyComplete
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.pdb
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\NepaliDateConverter.dll
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Focus.Web.Mvc.Session.dll
-D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\DocumentFormat.OpenXml.xml
