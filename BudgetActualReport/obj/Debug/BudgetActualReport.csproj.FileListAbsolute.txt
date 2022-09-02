@@ -195,3 +195,8 @@ D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\Microsoft.Owin.Security
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.csproj.CopyComplete
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.dll
 D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\obj\Debug\BudgetActualReport.pdb
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ClosedXML.dll
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ExcelNumberFormat.dll
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ClosedXML.pdb
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ClosedXML.xml
+D:\Focus\Fanar\BudgetActualReport\BudgetActualReport\bin\ExcelNumberFormat.xml
